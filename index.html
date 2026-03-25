@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Two2Global Transportation — Private Ground Transport</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0a0a0a;
+      --offblack: #111111;
+      --charcoal: #1a1a1a;
+      --border:  #2a2a2a;
+      --muted:   #888888;
+      --white:   #f5f5f5;
+      --pure:    #ffffff;
+      --gold:    #c9a84c;
+      --gold-dim: #a88a38;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 60px;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+      transition: background 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.97);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--pure);
+      text-decoration: none;
+    }
+    .nav-logo span {
+      color: var(--gold);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .btn-nav {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 10px 28px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-nav:hover {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://i.ibb.co/nsdXYD7N/561627221-17863699587473936-7070093515128181255-n.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      filter: brightness(0.62) contrast(1.08) saturate(1.3) blur(1.5px);
+      transform: scale(1.06);
+      transition: transform 8s ease;
+    }
+    .hero-bg.loaded { transform: scale(1.03); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          105deg,
+          rgba(4,6,18,0.82) 0%,
+          rgba(4,6,18,0.32) 52%,
+          rgba(4,6,18,0.18) 100%
+        ),
+        radial-gradient(
+          ellipse at 65% 45%,
+          transparent 25%,
+          rgba(4,6,18,0.48) 100%
+        );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 60px;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.6);
+    }
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--pure);
+      margin-bottom: 32px;
+      max-width: 700px;
+      text-shadow: 0 2px 32px rgba(0,0,0,0.7), 0 0 80px rgba(0,0,0,0.45);
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(245,245,245,0.88);
+      max-width: 440px;
+      margin-bottom: 52px;
+      line-height: 1.85;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 16px rgba(0,0,0,0.55);
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--black);
+      padding: 16px 44px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover {
+      background: #d4af60;
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      display: inline-block;
+      color: var(--white);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding-bottom: 3px;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      transition: border-color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--white); }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 60px;
+      right: 60px;
+      z-index: 2;
+      text-align: right;
+    }
+    .hero-badge p {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0.4;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: var(--white);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 0.8; transform: scaleY(0.6); }
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 120px 60px; max-width: 1200px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 58px);
+      font-weight: 400;
+      color: var(--pure);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.8;
+    }
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── SERVICES ── */
+    #services { border-top: 1px solid var(--border); }
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 72px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .service-card {
+      background: var(--offblack);
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+      transform-origin: left;
+    }
+    .service-card:hover { background: #141414; }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      margin-bottom: 32px;
+      filter: brightness(0.8);
+      transition: filter 0.3s;
+    }
+    .service-card:hover .service-img { filter: brightness(0.95); }
+    .service-img--airport {
+      filter: brightness(0.72) contrast(1.18) saturate(0.62) !important;
+      object-position: center 28%;
+    }
+    .service-card:hover .service-img--airport {
+      filter: brightness(0.82) contrast(1.14) saturate(0.68) !important;
+    }
+    .service-number {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--pure);
+      margin-bottom: 14px;
+    }
+    .service-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .service-link {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-dim);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+
+    /* ── PROOF STRIP ── */
+    .proof-strip {
+      background: var(--charcoal);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+    }
+    .proof-strip-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 60px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .proof-item {
+      padding: 52px 0;
+      border-right: 1px solid var(--border);
+      padding-right: 40px;
+      padding-left: 40px;
+    }
+    .proof-item:first-child { padding-left: 0; }
+    .proof-item:last-child { border-right: none; }
+    .proof-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 400;
+      color: var(--pure);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .proof-number span { color: var(--gold); }
+    .proof-label {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── EXPERIENCE SPLIT ── */
+    #experience {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    .exp-img-wrap {
+      position: relative;
+    }
+    .exp-img {
+      width: 100%;
+      height: 580px;
+      object-fit: cover;
+      filter: brightness(0.85);
+    }
+    .exp-img-badge {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      background: var(--gold);
+      color: var(--black);
+      padding: 28px 32px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .exp-list {
+      list-style: none;
+      margin-top: 40px;
+    }
+    .exp-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.6;
+    }
+    .exp-list li:first-child { border-top: 1px solid var(--border); }
+    .exp-list li::before {
+      content: '—';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── TESTIMONIAL ── */
+    #testimonial {
+      text-align: center;
+      border-top: 1px solid var(--border);
+      max-width: 800px;
+    }
+    .testimonial-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 400;
+      color: var(--pure);
+      line-height: 1.45;
+      margin: 32px 0 28px;
+    }
+    .testimonial-quote::before { content: '\201C'; color: var(--gold); }
+    .testimonial-quote::after  { content: '\201D'; color: var(--gold); }
+    .testimonial-attr {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── BOOKING FORM ── */
+    #booking {
+      border-top: 1px solid var(--border);
+      background: var(--offblack);
+      max-width: 100%;
+      padding: 120px 60px;
+    }
+    #booking-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .booking-info .section-title { margin-bottom: 24px; }
+    .booking-details {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .booking-detail-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .bdi-icon {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .bdi-icon svg { width: 14px; height: 14px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+    .bdi-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .bdi-value {
+      font-size: 14px;
+      color: var(--white);
+    }
+
+    .form-wrap { padding-top: 8px; }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    label {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    input, select, textarea {
+      background: var(--charcoal);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    input::placeholder, textarea::placeholder { color: #555; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+    }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+    select option { background: var(--charcoal); }
+    textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      margin-top: 8px;
+    }
+    .btn-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-submit:hover {
+      background: #d4af60;
+      transform: translateY(-1px);
+    }
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .form-note {
+      font-size: 11px;
+      color: #777;
+      margin-top: 14px;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    /* Success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 60px 40px;
+    }
+    .form-success.visible { display: block; }
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .success-icon svg { stroke: var(--gold); fill: none; stroke-width: 1.5; width: 22px; height: 22px; }
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      color: var(--pure);
+      margin-bottom: 14px;
+    }
+    .success-msg {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--pure);
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-copy {
+      font-size: 12px;
+      color: #444;
+      letter-spacing: 0.06em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #555;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.22s; }
+    .reveal-delay-3 { transition-delay: 0.34s; }
+    .reveal-fade {
+      opacity: 0;
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-fade.visible { opacity: 1; }
+
+    /* ── MOBILE NAV BOOK BTN ── */
+    .nav-mobile-book {
+      display: none;
+      background: var(--gold);
+      color: var(--black);
+      padding: 10px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    /* ── INSTAGRAM LINK ── */
+    .ig-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .ig-link:hover { color: var(--white); }
+    .ig-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 18px 20px; }
+      .nav-links { display: none; }
+      .nav-mobile-book { display: block; }
+
+      section { padding: 64px 20px; }
+      .hero-content { padding: 0 20px; }
+      .hero-badge { display: none; }
+      .hero-scroll { display: none; }
+
+      .hero-headline { font-size: clamp(44px, 11vw, 72px); margin-bottom: 20px; }
+      .hero-sub { font-size: 15px; margin-bottom: 36px; max-width: 100%; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .btn-primary { width: 100%; text-align: center; padding: 18px 24px; font-size: 12px; }
+      .btn-ghost { font-size: 13px; }
+
+      .services-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 40px; }
+      .services-grid { grid-template-columns: 1fr; gap: 2px; }
+      .service-card { padding: 36px 24px; }
+      .service-img { height: 200px; }
+
+      .proof-strip-inner { grid-template-columns: 1fr 1fr; padding: 0 20px; }
+      .proof-item { padding: 36px 16px; border-right: 1px solid var(--border); }
+      .proof-item:nth-child(2) { border-right: none; }
+      .proof-item:nth-child(3) { border-right: 1px solid var(--border); border-top: 1px solid var(--border); }
+      .proof-item:nth-child(4) { border-right: none; border-top: 1px solid var(--border); }
+      .proof-item:first-child { padding-left: 16px; }
+      .proof-number { font-size: 40px; }
+
+      .exp-section-mobile { grid-template-columns: 1fr !important; gap: 40px !important; padding: 64px 20px !important; }
+      .exp-img { height: 300px; }
+      .exp-img-badge { right: 0; bottom: -16px; padding: 18px 20px; font-size: 12px; }
+      .exp-list li { font-size: 14px; padding: 14px 0; }
+
+      .testimonial-section-mobile { padding: 64px 20px !important; }
+      .testimonial-quote { font-size: clamp(22px, 6vw, 32px); }
+
+      .booking-section-mobile { padding: 64px 20px !important; }
+      .booking-inner-mobile { grid-template-columns: 1fr !important; gap: 40px !important; padding: 64px 20px !important; }
+      .form-row { grid-template-columns: 1fr; }
+      .booking-details { margin-top: 32px; gap: 20px; }
+
+      footer { flex-direction: column; gap: 20px; text-align: center; padding: 40px 20px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
+      .footer-ig { justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-headline { font-size: clamp(40px, 12vw, 56px); }
+      .section-title { font-size: clamp(30px, 8vw, 44px); }
+      .proof-number { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">Two2<span>Global</span></a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#booking" class="btn-nav">Book Now</a></li>
+    </ul>
+    <a href="#booking" class="nav-mobile-book">Book Now</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" style="max-width:100%;padding:0;">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">New York, NY &nbsp;·&nbsp; Private Ground Transportation</p>
+      <h1 class="hero-headline">Private.<br><em>Precise.</em><br>On Time.</h1>
+      <p class="hero-sub">Premium black vehicle service for executives, VIP transfers, and those who expect more than a rideshare.</p>
+      <div class="hero-ctas">
+        <a href="#booking" class="btn-primary">Reserve Your Ride</a>
+        <a href="#services" class="btn-ghost">View Services</a>
+      </div>
+    </div>
+    <div class="hero-badge">
+      <p>Available 24 / 7</p>
+      <p style="color:rgba(255,255,255,0.2);font-size:10px;margin-top:4px;">New York City &amp; Surrounding Areas</p>
+    </div>
+    <div class="hero-scroll"><div class="scroll-line"></div></div>
+  </section>
+
+  <!-- SERVICES -->
+  <div style="background:var(--black);">
+    <section id="services">
+      <div class="services-header">
+        <div>
+          <p class="section-eyebrow">What We Offer</p>
+          <h2 class="section-title">Every Journey,<br>Handled Properly.</h2>
+        </div>
+        <p class="section-sub" style="max-width:320px;">Three core services — each built around your schedule, your comfort, and your expectations.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <img
+            src="https://i.ibb.co/d0jDXVXc/airport-transfer-4.jpg"
+            alt="Airport Transfer"
+            class="service-img service-img--airport"
+          />
+          <p class="service-number">01</p>
+          <h3 class="service-name">Airport Transfers</h3>
+          <p class="service-desc">Flight-tracked pickups, guaranteed on-time arrivals, and seamless curbside service — every time.</p>
+          <a href="#booking" class="service-link">Book Transfer →</a>
+        </div>
+        <div class="service-card reveal reveal-delay-1">
+          <img
+            src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=800&q=80"
+            alt="Hourly Chauffeur"
+            class="service-img"
+          />
+          <p class="service-number">02</p>
+          <h3 class="service-name">Hourly Chauffeur</h3>
+          <p class="service-desc">Your driver. Your schedule. Retain a dedicated professional for meetings, appointments, or an entire day.</p>
+          <a href="#booking" class="service-link">Book by the Hour →</a>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <img
+            src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
+            alt="Events & Special Occasions"
+            class="service-img"
+          />
+          <p class="service-number">03</p>
+          <h3 class="service-name">Events &amp; Occasions</h3>
+          <p class="service-desc">Corporate events, galas, and celebrations. Arrive with the presence your evening deserves.</p>
+          <a href="#booking" class="service-link">Book for an Event →</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PROOF STRIP -->
+  <div class="proof-strip">
+    <div class="proof-strip-inner">
+      <div class="proof-item reveal" id="proofOnTime">
+        <div class="proof-number"><span id="countUp">0</span><span>%</span></div>
+        <div class="proof-label">On-Time Guarantee</div>
+      </div>
+      <div class="proof-item reveal reveal-delay-1">
+        <div class="proof-number">24<span>/7</span></div>
+        <div class="proof-label">Availability</div>
+      </div>
+      <div class="proof-item reveal reveal-delay-2">
+        <div class="proof-number">5<span>★</span></div>
+        <div class="proof-label">Client Rating</div>
+      </div>
+      <div class="proof-item reveal reveal-delay-3">
+        <div class="proof-number">—</div>
+        <div class="proof-label">Zero Compromises</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE SPLIT -->
+  <div style="background:var(--black);">
+    <section id="experience" class="exp-section-mobile" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-top:1px solid var(--border);padding:120px 60px;">
+      <div class="exp-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=80"
+          alt="Premium interior"
+          class="exp-img"
+        />
+        <div class="exp-img-badge">Premium<br>Fleet<br>Available Now</div>
+      </div>
+      <div>
+        <p class="section-eyebrow">The Standard</p>
+        <h2 class="section-title">Not a Rideshare.<br>A Standard.</h2>
+        <p class="section-sub">Two2Global exists for clients who've experienced the difference — and refuse to go back.</p>
+        <ul class="exp-list">
+          <li>Flight-monitored airport pickups with real-time adjustments</li>
+          <li>Professionally dressed, vetted chauffeurs — not drivers</li>
+          <li>Climate-controlled, spotless black vehicles for every run</li>
+          <li>Complete discretion for executive and VIP clientele</li>
+          <li>Confirmed bookings — no surge pricing, no cancellations</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- TESTIMONIAL -->
+  <div style="background:var(--offblack);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+    <section id="testimonial" class="testimonial-section-mobile" style="max-width:800px;margin:0 auto;text-align:center;padding:100px 60px;">
+      <p class="section-eyebrow">Client Experience</p>
+      <blockquote class="testimonial-quote">
+        Showed up early, handled everything professionally, and made the whole trip seamless. This is the only service I use.
+      </blockquote>
+      <p class="testimonial-attr">— Turbo Miller &nbsp;·&nbsp; NY Giants</p>
+    </section>
+  </div>
+
+  <!-- BOOKING FORM -->
+  <div id="booking" class="booking-section-mobile" style="background:var(--offblack);border-top:1px solid var(--border);">
+    <div id="booking-inner" class="booking-inner-mobile" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start;padding:120px 60px;">
+      <div class="booking-info">
+        <p class="section-eyebrow">Reserve Your Ride</p>
+        <h2 class="section-title">Let's Move<br>You Right.</h2>
+        <p class="section-sub">Submit your trip details and we'll confirm availability and pricing within the hour.</p>
+        <div class="booking-details">
+          <div class="booking-detail-item">
+            <div class="bdi-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <div>
+              <p class="bdi-label">Service Area</p>
+              <p class="bdi-value">NYC, NJ &amp; CT and Surrounding Areas</p>
+            </div>
+          </div>
+          <div class="booking-detail-item">
+            <div class="bdi-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <p class="bdi-label">Response Time</p>
+              <p class="bdi-value">Within 60 minutes — guaranteed</p>
+            </div>
+          </div>
+          <div class="booking-detail-item">
+            <div class="bdi-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.18 1.2 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.72 6.72l1.28-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <p class="bdi-label">Inquiries</p>
+              <p class="bdi-value">Available via this form or direct call</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-wrap">
+        <form id="bookingForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" name="first_name" placeholder="Andrew" required />
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" name="last_name" placeholder="Smith" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+1 (585) 000-0000" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="you@domain.com" required />
+            </div>
+          </div>
+          <div class="form-group full">
+            <label for="service">Service Type</label>
+            <select id="service" name="service_type" required>
+              <option value="" disabled selected>Select a service...</option>
+              <option value="Airport Transfer">Airport Transfer</option>
+              <option value="Hourly Chauffeur">Hourly Chauffeur</option>
+              <option value="Event / Special Occasion">Event / Special Occasion</option>
+              <option value="Corporate">Corporate Account</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="date">Trip Date</label>
+              <input type="date" id="date" name="trip_date" required />
+            </div>
+            <div class="form-group">
+              <label for="time">Pickup Time</label>
+              <input type="time" id="time" name="pickup_time" required />
+            </div>
+          </div>
+          <div class="form-group full">
+            <label for="pickup">Pickup Location</label>
+            <input type="text" id="pickup" name="pickup_location" placeholder="Address or terminal" required />
+          </div>
+          <div class="form-group full">
+            <label for="dropoff">Drop-off Location</label>
+            <input type="text" id="dropoff" name="dropoff_location" placeholder="Address or destination" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="passengers">Passengers</label>
+              <select id="passengers" name="passengers">
+                <option value="1">1 Passenger</option>
+                <option value="2">2 Passengers</option>
+                <option value="3">3 Passengers</option>
+                <option value="4">4 Passengers</option>
+                <option value="5+">5+ Passengers</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="hours">Estimated Hours (if hourly)</label>
+              <input type="number" id="hours" name="estimated_hours" placeholder="e.g. 3" min="1" max="24" />
+            </div>
+          </div>
+          <div class="form-group full">
+            <label for="notes">Additional Notes</label>
+            <textarea id="notes" name="notes" placeholder="Flight number, special requests, or anything we should know..."></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn-submit" id="submitBtn">Request Reservation</button>
+          </div>
+          <p class="form-note">Your information is kept completely private. We respond within 60 minutes.</p>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 class="success-title">Request Received.</h3>
+          <p class="success-msg">Drew's team has been notified and will confirm your reservation within the hour.<br>Check your phone for a confirmation message.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Two2<span>Global</span> Transportation</div>
+    <ul class="footer-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#booking">Book Now</a></li>
+      <li><a href="https://www.instagram.com/two2global_/" target="_blank">Instagram</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Two2Global Transportation. New York, NY.</p>
+  </footer>
+
+  <script>
+    // ── SCROLL REVEAL
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-fade').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // ── COUNTUP: 0 → 100% on scroll
+    const countUpEl = document.getElementById('countUp');
+    const countUpObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          let start = 0;
+          const end = 100;
+          const duration = 1800;
+          const step = Math.ceil(duration / end);
+          const timer = setInterval(() => {
+            start++;
+            countUpEl.textContent = start;
+            if (start >= end) clearInterval(timer);
+          }, step);
+          countUpObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    countUpObserver.observe(document.getElementById('proofOnTime'));
+
+    // ── NAV scroll state
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ── Hero BG subtle load animation
+    const heroBg = document.getElementById('heroBg');
+    setTimeout(() => heroBg.classList.add('loaded'), 100);
+
+    // ── FORM SUBMISSION
+    // 🔧 REPLACE THIS URL with your Make.com or Zapier webhook endpoint
+    const WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/26412265/upxyvhc/';
+
+    const form = document.getElementById('bookingForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formSuccess = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      const data = {
+        first_name:        form.first_name.value,
+        last_name:         form.last_name.value,
+        phone:             form.phone.value,
+        email:             form.email.value,
+        service_type:      form.service_type.value,
+        trip_date:         form.trip_date.value,
+        pickup_time:       form.pickup_time.value,
+        pickup_location:   form.pickup_location.value,
+        dropoff_location:  form.dropoff_location.value,
+        passengers:        form.passengers.value,
+        estimated_hours:   form.estimated_hours.value || 'N/A',
+        notes:             form.notes.value || 'None',
+        submitted_at:      new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+        source:            'Two2Global Website'
+      };
+
+      // Track 1: Edge function → Telegram pings + Zapier Sheets
+      try {
+        const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+        if (!navigator.sendBeacon('/api/confirm', blob)) {
+          await fetch('/api/confirm', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+        }
+      } catch (err) {
+        console.error('edge error:', err);
+      }
+
+      // Track 2: Direct Zapier backup — always fires regardless
+      try {
+        fetch('https://hooks.zapier.com/hooks/catch/26412265/upxyvhc/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(data),
+          mode: 'no-cors'
+        });
+      } catch (err) {
+        console.error('zapier error:', err);
+      }
+
+      form.style.display = 'none';
+      formSuccess.classList.add('visible');
+      window.scrollTo({ top: document.getElementById('booking').offsetTop - 80, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
