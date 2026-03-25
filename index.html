@@ -1028,7 +1028,7 @@
             <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <h3 class="success-title">Request Received.</h3>
-          <p class="success-msg">Drew's team has been notified and will confirm your reservation within the hour.<br>Check your phone for a confirmation message.</p>
+          <p class="success-msg">Our team has been notified and will confirm your reservation within the hour.<br>Check your phone for a confirmation message.</p>
         </div>
       </div>
     </div>
@@ -1120,30 +1120,14 @@
         source:            'Two2Global Website'
       };
 
-      // Track 1: Edge function → Telegram pings + Zapier Sheets
       try {
-        const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-        if (!navigator.sendBeacon('/api/confirm', blob)) {
-          await fetch('/api/confirm', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          });
-        }
-      } catch (err) {
-        console.error('edge error:', err);
-      }
-
-      // Track 2: Direct Zapier backup — always fires regardless
-      try {
-        fetch('https://hooks.zapier.com/hooks/catch/26412265/upxyvhc/', {
+        await fetch('/api/confirm', {
           method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify(data),
-          mode: 'no-cors'
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
         });
       } catch (err) {
-        console.error('zapier error:', err);
+        console.error('booking error:', err);
       }
 
       form.style.display = 'none';
